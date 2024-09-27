@@ -3,20 +3,14 @@
 The Blog Post Panel project is a user-friendly platform that allows users to register and log in to manage their blog content. Built with Express.js for the backend and EJS for the frontend, it utilizes MongoDB for data storage and Passport.js for user authentication. Users can create, read, edit, and delete their own blog posts, which can include a title, content, and an image uploaded via Multer. The platform features a public "All Blogs" page where users can view blogs from others without modification options, as well as a personalized "My Blogs" page for managing their own content. This project provides a streamlined experience for both blog creators and readers.
 
 
-
-
-
-
-
-
 # How to Download and Run the Project
 1. Clone the Repository :
    ```bash
-   git clone https://github.com/DenishaDobariya/movie_Management.git
+   git clone https://github.com/DenishaDobariya/Blog_Panel.git
 
 3. Navigate to the Project Directory :
    ```bash
-   cd movie_Management
+   cd Blog_Panel
 
 5. Install Dependencies: After cloning the project, install the necessary dependencies using npm :
    ```bash
