@@ -38,20 +38,24 @@ node_modules :  To avoid uploading large and unnecessary files to the repository
  
 # 🛠️ Technologies:
 
-Backend: Node.js, Express.js
+Frontend :
+EJS (Embedded JavaScript) for templating
+Bootstrap for responsive UI design
+Backend:
 
-Frontend: EJS (Embedded JavaScript)
+Express.js : for building the server and API
+MongoDB : for database management
+Mongoose for object data modeling (ODM)
+Authentication:
 
-Database: MongoDB
+Passport.js  : for user registration and login
+File Uploads:
 
-Image Upload: Multer for handling poster uploads
+Multer : for handling file uploads (images)
+Session Management:
+
+Express-session :  for session handling and cookies
 
 
-# ⚙️ Learning Outcomes:
 
-CRUD operations with Node.js, Express.js, and MongoDB
-
-Handling file uploads using Multer
-
-Rendering dynamic HTML pages with EJS
 
