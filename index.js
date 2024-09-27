@@ -26,7 +26,7 @@ app.use(passport.session());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/upload', express.static(path.join(__dirname, 'upload'))); 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'views'))); 
 app.use('/', router);
 

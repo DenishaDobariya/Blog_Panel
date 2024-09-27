@@ -1,31 +1,24 @@
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
 passport.use(new LocalStrategy({ usernameField: 'email' },
-    async (username, password, done) => {
+    async (email, password, done) => {
         try {
-            console.log("Passport authentication...", username);
-            
-            const user = await User.findOne({ email: username });
+            console.log("Passport authentication...", email);
+            const user = await User.findOne({ email });
             console.log("User found:", user);
 
             if (user) {
-                bcrypt.compare(password, user.password, (err, result) => {
-                    if (err) {
-                        console.log("Error during password comparison");
-                        return done(err);
-                    }
-
-                    if (result) {
-                        console.log("Authentication successful");
-                        return done(null, user); 
-                    } else {
-                        console.log("Incorrect password");
-                        return done(null, false, { message: 'Incorrect password.' });
-                    }
-                });
+                const isMatch = await bcrypt.compare(password, user.password);
+                if (isMatch) {
+                    console.log("Authentication successful");
+                    return done(null, user); 
+                } else {
+                    console.log("Incorrect password");
+                    return done(null, false, { message: 'Incorrect password.' });
+                }
             } else {
                 console.log("User not found");
                 return done(null, false, { message: 'User not found.' });

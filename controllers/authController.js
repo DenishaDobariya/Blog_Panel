@@ -1,52 +1,50 @@
 const User = require('../models/User'); 
 const bcrypt = require('bcrypt');
-const passport = require('passport');
+const passport = require('passport'); 
+const saltRounds = 8;
 
 const renderRegister = (req, res) => {
     res.render('register');
 };
 
 const register = async (req, res) => {
-    const { username, password } = req.body;
-
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        
-        const user = new User({ username, password: hashedPassword });
-        await user.save();
-
-        res.redirect('/auth/login');
-    } catch (error) {
-        res.status(500).send('Error registering new user.');
+    if (req.body.password == req.body.confirmPassword) {
+        try {
+            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds); 
+            const newUser = new User({
+                name: req.body.name,
+                email: req.body.email,
+                password: hashedPassword,
+            });
+            await newUser.save(); 
+            res.redirect('/login'); 
+        } catch (error) {
+            console.error("Error saving user:", error);
+            res.redirect('/register'); 
+        }
+    } else {
+        console.log("Passwords do not match.");
+        res.redirect('/register'); 
     }
 };
 
 const renderLogin = (req, res) => {
-    res.render('login');
+    if (req.isAuthenticated()) {
+        res.redirect('/'); 
+    } else {
+        res.render('login'); 
+    }
 };
 
-const login = (req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            return res.redirect('/auth/login');
-        }
-        req.logIn(user, (err) => {
-            if (err) {
-                return next(err);
-            }
-            return res.redirect('/blogs');
-        });
-    })(req, res, next);
+const login = (req, res) => {
+    res.redirect('/blogs'); 
 };
 
-const logout = (req, res) => {
+const logout = (req, res, next) => {
     req.logout((err) => {
-        if (err) { return next(err); }
-        res.redirect('/auth/login');
+        if (err) { return next(err); } 
+        res.redirect('/login'); 
     });
 };
 
-module.exports = {renderRegister, register, renderLogin, login, logout}
+module.exports = { renderRegister, register, renderLogin, login, logout };
