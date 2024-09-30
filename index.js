@@ -1,13 +1,12 @@
+require('dotenv').config();
 const express = require('express');
-const dotenv = require('dotenv');
 const path = require('path');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const passport = require('./config/passportConfig');
-const db = require('./config/db');  
+const db = require('./config/db')
 const imgdb = require('./config/imgdb'); 
 const router = require('./routes/index');
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3003;
@@ -26,7 +25,7 @@ app.use(passport.session());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 app.use(express.static(path.join(__dirname, 'views'))); 
 app.use('/', router);
 

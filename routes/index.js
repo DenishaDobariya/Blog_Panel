@@ -12,7 +12,7 @@ router.post('/register', authController.register);
 
 router.get('/login', authController.renderLogin);
 router.post('/login', passport.authenticate('local', { 
-    failureRedirect: '/auth/login',
+    failureRedirect: '/login',
     failureFlash: true 
 }), authController.login);
 

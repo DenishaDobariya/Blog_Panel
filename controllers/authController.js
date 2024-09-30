@@ -1,6 +1,5 @@
 const User = require('../models/User'); 
 const bcrypt = require('bcrypt');
-const passport = require('passport'); 
 const saltRounds = 8;
 
 const renderRegister = (req, res) => {
@@ -8,35 +7,45 @@ const renderRegister = (req, res) => {
 };
 
 const register = async (req, res) => {
-    if (req.body.password == req.body.confirmPassword) {
-        try {
-            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds); 
-            const newUser = new User({
-                name: req.body.name,
-                email: req.body.email,
-                password: hashedPassword,
-            });
-            await newUser.save(); 
-            res.redirect('/login'); 
-        } catch (error) {
-            console.error("Error saving user:", error);
-            res.redirect('/register'); 
-        }
-    } else {
+    if (req.body.password === req.body.confirmPassword) {
+        bcrypt.hash(req.body.password, saltRounds, async function (err, hashPass) {
+            console.log("hashed Password : ", hashPass);
+
+            if (!err) {
+                const signUpUser = await new User({
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: hashPass
+                });
+                console.log("USER", signUpUser);
+                const createdUser = await signUpUser.save();
+                console.log("SignUp user : ", createdUser);
+                res.redirect('/login');
+            }
+            else{
+                console.error("Error hashing password:", err);
+                return res.redirect('/register'); 
+            }
+        });
+    } 
+    else {
         console.log("Passwords do not match.");
-        res.redirect('/register'); 
+        res.redirect('/register');
     }
 };
 
 const renderLogin = (req, res) => {
     if (req.isAuthenticated()) {
-        res.redirect('/'); 
+        console.log("user is already login");
+        res.redirect('/blogs'); 
     } else {
+        console.log("please login...");
         res.render('login'); 
     }
 };
 
 const login = (req, res) => {
+    console.log("success login..."); 
     res.redirect('/blogs'); 
 };
 

@@ -50,15 +50,15 @@
             <input type="text" name="id" value="<%= blog._id %>" hidden>
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="title" value="<%= blog.title %>" required>
+                <input type="text" class="form-control" id="title" name="title" value="<%= blog.title %>">
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label">Content</label>
-                <textarea class="form-control" id="content" name="content" rows="5" required><%= blog.content %></textarea>
+                <textarea class="form-control" id="content" name="content" rows="5"><%= blog.content %></textarea>
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Image</label>
-                <input type="file" class="form-control" id="image" name="image">
+                <input type="file" class="form-control" id="image" name="image" value="<%= blog.image %>">
             </div>
             <button type="submit" class="btn btn-primary">Update Blog</button>
         </form>

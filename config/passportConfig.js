@@ -1,51 +1,53 @@
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/User');
+const LocalStrategy = require('passport-local');
+const User= require('../models/User');
+const expressSession = require('express-session')
 const bcrypt = require('bcrypt');
 
+
 passport.use(new LocalStrategy({ usernameField: 'email' },
-    async (email, password, done) => {
-        try {
-            console.log("Passport authentication...", email);
-            const user = await User.findOne({ email });
-            console.log("User found:", user);
-
-            if (user) {
-                const isMatch = await bcrypt.compare(password, user.password);
-                if (isMatch) {
-                    console.log("Authentication successful");
-                    return done(null, user); 
-                } else {
-                    console.log("Incorrect password");
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
-            } else {
-                console.log("User not found");
-                return done(null, false, { message: 'User not found.' });
+    async(username, password, done)=> {
+      console.log("passport...",username);
+        
+      const user= await User.findOne({ email: username });
+      console.log("user",user);
+      
+      if(user){
+        bcrypt.compare(password, user.password, async(err, result) =>{
+            if(err){
+                console.log("err..");
+                done(err);
             }
-        } catch (err) {
-            console.error("Error in authentication:", err);
-            return done(err);
-        }
-    }
-));
 
-passport.serializeUser((user, done) => {
+            if(result){
+                console.log("success..");
+                done(null, user)
+            }
+            else{
+                console.log("err...");
+                done(null, false)
+            }
+        });
+      }
+      else{
+        console.log("error...");
+        done(null, false);
+      }
+    }
+  ));
+
+  passport.serializeUser((user, done)=> {
     done(null, user._id);
-});
-
-passport.deserializeUser(async (id, done) => {
-    try {
-        const user = await User.findById(id);
-        if (user) {
-            done(null, user); 
-        } else {
-            done(null, false); 
+  });
+  
+  passport.deserializeUser(async(id, done) =>{
+    const user = await User.findById(id);
+        if(user){
+            done(null, user);
+        } 
+        else {
+            done(null, false);
         }
-    } catch (err) {
-        console.error("Error during deserialization:", err);
-        done(err);
-    }
-});
+  });
 
-module.exports = passport;
+  module.exports= passport;

@@ -4,7 +4,7 @@ const path = require('path');
 
 const getAllBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find().populate('author', 'username'); 
+        const blogs = await Blog.find().populate('author', 'name username'); 
         res.render('blog', { blogs, user: req.user });
     } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -14,7 +14,7 @@ const getAllBlogs = async (req, res) => {
 
 const getMyBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find({ author: req.user.id }).populate('author', 'username');
+        const blogs = await Blog.find({ author: req.user.id }).populate('author', 'name username');        
         console.log("User's blogs:", blogs);
         res.render('myBlogs', { blogs , user: req.user });
     } catch (error) {
