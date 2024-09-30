@@ -56,6 +56,10 @@ File Uploads:
 Multer : for handling file uploads (images)
 Session Management:
 
+https://github.com/user-attachments/assets/47ef1f7d-b6a1-4e9f-bb48-6b601f2d9e2e
+
+
+
 Express-session :  for session handling and cookies
 
 
