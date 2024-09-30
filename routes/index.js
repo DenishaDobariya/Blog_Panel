@@ -27,7 +27,6 @@ router.post('/add', isAuth, upload.single('image'), blogController.addBlog);
 router.get('/edit/:id', isAuth, blogController.renderEditBlog);
 router.post('/edit', isAuth, upload.single('image'), blogController.editBlog);
 router.get('/delete/:id', isAuth, blogController.deleteBlog);
-router.get('/blogs/:id', isAuth, blogController.viewBlog)
 
 
 module.exports = router;

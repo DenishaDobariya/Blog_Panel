@@ -116,17 +116,4 @@ const deleteBlog = async (req, res) => {
     }
 };
 
-const viewBlog =async (req, res) => {
-    try {
-        const blog = await Blog.findById(req.params.id).populate('author'); 
-        if (!blog) {
-            return res.status(404).send('Blog not found');
-        }
-        res.render('viewBlog', { blog, user:req.user });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server Error');
-    }
-}
-
-module.exports = { getAllBlogs, getMyBlogs, renderAddBlog, addBlog, renderEditBlog, editBlog, deleteBlog ,viewBlog};
+module.exports = { getAllBlogs, getMyBlogs, renderAddBlog, addBlog, renderEditBlog, editBlog, deleteBlog };

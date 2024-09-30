@@ -27,7 +27,7 @@
                                 <a class="nav-link" href="/blogs">All Blogs</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/logout">Logout</a>
+                                <a class="nav-link text-danger" href="/logout">Logout</a>
                             </li>
                         <% } else { %>
                             <li class="nav-item">
@@ -61,7 +61,6 @@
                                 <div class="mt-auto">
                                     <a href="/edit/<%= blog._id %>" class="btn btn-warning btn-sm">Edit</a>
                                     <a href="/delete/<%= blog._id %>" class="btn btn-danger btn-sm">Delete</a>
-                                    <a href="/blogs/<%= blog._id %>" class="btn btn-primary btn-sm">View</a>
                                 </div>
                             </div>
                         </div>
