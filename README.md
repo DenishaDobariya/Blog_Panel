@@ -24,9 +24,9 @@ The Blog Post Panel project is a user-friendly platform that allows users to reg
    ```bash
    npm start
 
-9. Access the Application:Open your browser and go to : 
+9. Access the Application :Open your browser and go to : 
    ```bash
-   http://localhost:3006 
+   http://localhost:3003 
 
 # .gitignore
 The project includes a .gitignore file that excludes the following:
@@ -35,6 +35,8 @@ node_modules :  To avoid uploading large and unnecessary files to the repository
 
 .env :  To protect sensitive information like API keys and database credentials.
 
+# Live Priview
+Open your browser and go to : http://localhost:3003
  
 # 🛠️ Technologies:
 
